@@ -1,7 +1,8 @@
 #简介
 使用运行时注解,全局拦截检查网络，是否登录，快速双击过滤，方法调用耗时打印.
 以一种更优雅的方式实现这些常用的判断
-
+[![](/tree/master/Screenshots/Screenshot.jpg "aop")][aop]
+https://github.com/laiying/aop/tree/master/Screenshots
 更多使用(请参考demo)
 
 
