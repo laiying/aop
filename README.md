@@ -30,7 +30,7 @@
     app->build.gradle
 
     apply plugin: 'com.android.application'
-    // ajc 编译所需gradle脚本,application适用
+    // ajc 编译所需gradle脚本,application适用,建议下载aspectj-configure-app.gradle到自己项目的app路径,使用apply from: './aspectj-configure-app.gradle'
     apply from: '../aop-library/aspectj-configure-app.gradle'
 
     android {
