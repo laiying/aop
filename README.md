@@ -3,7 +3,6 @@
 以一种更优雅的方式实现这些常用的判断
 
 ![demo](https://github.com/laiying/aop/tree/master/Screenshots/Screenshot.jpg)
-![demo](/raw/master/Screenshots/Screenshot.jpg)  
 更多使用(请参考demo)
 
 
@@ -40,7 +39,7 @@ android {
 
 dependencies {
 
-    implementation project(path: ':aop-library')
+    api 'com.github.laiying:aop:1.0.0'
     ...
 }
 
