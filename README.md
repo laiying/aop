@@ -9,93 +9,94 @@
 #### 二、基础功能
 0. gradle环境
 ```
-//root build.gradle
-dependencies {
-    classpath 'com.android.tools.build:gradle:3.2.1'
+    //root build.gradle
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.2.1'
 
-    // NOTE: Do not place your application dependencies here; they belong
-    // in the individual module build.gradle files
-}
-repositories {
-    google()
-    jcenter()
-    maven { url "https://jitpack.io" }
-}
-// gradle/wrapper/gradle-wrapper.properties
-distributionUrl=https\://services.gradle.org/distributions/gradle-4.10.1-all.zip
-####其它gradle版本请自行配置
-
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+    repositories {
+        google()
+        jcenter()
+        maven { url "https://jitpack.io" }
+    }
+    // gradle/wrapper/gradle-wrapper.properties
+    distributionUrl=https\://services.gradle.org/distributions/gradle-4.10.1-all.zip
+    ####其它gradle版本请自行配置
+```
 1. 添加依赖和配置
-``` app->build.gradle
+```
+    app->build.gradle
 
-apply plugin: 'com.android.application'
-// ajc 编译所需gradle脚本,application适用
-apply from: '../aop-library/aspectj-configure-app.gradle'
+    apply plugin: 'com.android.application'
+    // ajc 编译所需gradle脚本,application适用
+    apply from: '../aop-library/aspectj-configure-app.gradle'
 
-android {
-    defaultConfig {
-	...
-}
+    android {
+        defaultConfig {
+        ...
+    }
 
-dependencies {
+    dependencies {
 
-    api 'com.github.laiying:aop:1.0.0'
-    ...
-}
-
+        api 'com.github.laiying:aop:1.0.0'
+        ...
+    }
+```
 
 2. 初始化SDK
 ``` java
-public class MyApplication extends Application {
-    private static Application sInstance;
+    public class MyApplication extends Application {
+        private static Application sInstance;
 
-    public static boolean sIsUserLogin = false;
+        public static boolean sIsUserLogin = false;
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        sInstance = this;
-        //设置打印日志
-        AopManager.setDebug(BuildConfig.DEBUG);
+        @Override
+        public void onCreate() {
+            super.onCreate();
+            sInstance = this;
+            //设置打印日志
+            AopManager.setDebug(BuildConfig.DEBUG);
 
-        //设置全局的无网络提示
-        AopManager.getInstance().setINetwork(new INetwork() {
-            @Override
-            public boolean isNetworkOnline() {
-                return NetMonitorUtils.isNetworkConnected(sInstance);
-            }
-
-            @Override
-            public void onNetworkTips(int type) {
-                switch (type){
-                    case 0:
-                        Toast.makeText(sInstance, "暂无网络", Toast.LENGTH_SHORT).show();
-                        break;
-                    case 1:
-                        //dialog or other,custom define
-                        break;
+            //设置全局的无网络提示
+            AopManager.getInstance().setINetwork(new INetwork() {
+                @Override
+                public boolean isNetworkOnline() {
+                    return NetMonitorUtils.isNetworkConnected(sInstance);
                 }
-            }
-        });
 
-        //设置全局的登录拦截
-        AopManager.getInstance().setILoginInterceptor(new ILoginInterceptor() {
-            @Override
-            public boolean isLogin() {
-                //这里判断当前是否登录
-                return sIsUserLogin;
-            }
+                @Override
+                public void onNetworkTips(int type) {
+                    switch (type){
+                        case 0:
+                            Toast.makeText(sInstance, "暂无网络", Toast.LENGTH_SHORT).show();
+                            break;
+                        case 1:
+                            //dialog or other,custom define
+                            break;
+                    }
+                }
+            });
 
-            @Override
-            public void navigationLoginUI(int action) {
-                //这里可以设置跳转到登录页面,可根据action做相关的操作设置
-                Log.d("LoginInterceptor", "navToLoginUI action:"+ action);
-                LoginActivity.start(sInstance);
-            }
-        });
+            //设置全局的登录拦截
+            AopManager.getInstance().setILoginInterceptor(new ILoginInterceptor() {
+                @Override
+                public boolean isLogin() {
+                    //这里判断当前是否登录
+                    return sIsUserLogin;
+                }
+
+                @Override
+                public void navigationLoginUI(int action) {
+                    //这里可以设置跳转到登录页面,可根据action做相关的操作设置
+                    Log.d("LoginInterceptor", "navToLoginUI action:"+ action);
+                    LoginActivity.start(sInstance);
+                }
+            });
+        }
+
     }
-
-}
 
 ```
 
