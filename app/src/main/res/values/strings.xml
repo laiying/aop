@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Aop</string>
+    <string name="check_network">检查网络</string>
+    <string name="login">是否登录</string>
+    <string name="single_click">快速双击拦截</string>
+    <string name="time_trace">方法调用时间打印</string>
+    <string name="login_btn">立马登录</string>
+    <string name="logout_btn">登出</string>
+</resources>
